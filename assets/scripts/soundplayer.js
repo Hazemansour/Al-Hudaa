@@ -1,4 +1,4 @@
-const endpoint = 'http://api.alquran.cloud/v1/meta';
+const endpoint = 'https://api.alquran.cloud/v1/meta';
 const request = new XMLHttpRequest();
 const audio = new Audio();
 const playPause = document.querySelector('#play-pause');
