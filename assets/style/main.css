@@ -1,0 +1,336 @@
+/* === Global Rules ===*/
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    width: 1370px;
+  }
+}
+
+:root {
+  --mainColor: #003221;
+  --secondaryColor: #10724f;
+  --addColor: #eac280;
+  --mainTranstion: all 0.3s ease-in-out;
+  --mainFont: "Cairo", sans-serif;
+  --secondFont: "Scheherazade New", serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--mainFont);
+  font-size: 16px;
+  color: #17274a;
+  background-color: #fafafa;
+}
+
+/* Start Styling of Header */
+.navbar-wrapper {
+  height: 75px;
+  width: 100%;
+  position: fixed;
+  background-color: var(--mainColor);
+  z-index: 1000;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* position: relative; */
+}
+
+.navbar > #branding {
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: "Scheherazade New", serif;
+  color: var(--addColor);
+}
+
+.navbar > #branding > img {
+  width: 64px;
+}
+
+.navitems > li {
+  display: inline-block;
+  list-style: none;
+}
+
+.navitems > li > a {
+  display: inline-block;
+  padding: 13px 18px;
+  color: var(--addColor);
+  transition: var(--mainTranstion);
+}
+
+.navitems > li > a:hover {
+  background-color: var(--addColor);
+  color: var(--mainColor);
+}
+
+/* Dropdown menu styles */
+.dropdown {
+  position: relative;
+}
+.dropdown > a > span {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 3px;
+}
+
+.dropdown > .dropmenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 200%;
+  background-color: var(--secondaryColor);
+  display: none;
+  transition: var(--mainTranstion);
+}
+
+.dropdown:hover > .dropmenu {
+  display: block;
+}
+
+.dropdown > .dropmenu > li {
+  list-style: none;
+}
+
+.dropdown > .dropmenu > li > a {
+  color: var(--addColor);
+  display: inline-block;
+  padding: 5px 15px;
+  width: 100%;
+  transition: var(--mainTranstion);
+}
+
+.dropdown > .dropmenu > li > a:hover {
+  color: var(--mainColor);
+  background-color: var(--addColor);
+}
+/*Navbar menu button styles*/
+.navbar-menu-btn {
+  display: none;
+}
+.navbar-menu-btn > .bar {
+  width: 30px;
+  height: 3px;
+  background-color: var(--addColor);
+  margin-bottom: 4px;
+  border-radius: 4px;
+}
+
+@media (max-width: 767px) {
+  .navitems {
+    position: absolute;
+    left: -351px;
+    top: 100%;
+    width: 350px;
+    transition: var(--mainTranstion);
+  }
+  .navitems.show {
+    transform: translateX(351px);
+  }
+  .navitems > li {
+    display: block;
+    background-color: var(--addColor);
+  }
+  .navitems > li > a {
+    color: var(--mainColor);
+    width: 100%;
+  }
+  .navitems > li > a:hover {
+    color: var(--addColor);
+    background-color: var(--secondaryColor);
+  }
+  .dropdown > .dropmenu {
+    width: 100%;
+  }
+  .navbar-menu-btn {
+    display: block;
+    cursor: pointer;
+  }
+  .navbar-menu-btn > .bar {
+    width: 30px;
+    height: 3px;
+    background-color: var(--addColor);
+    margin-bottom: 4px;
+    border-radius: 4px;
+  }
+}
+
+/* Banner Styling  */
+
+.banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding-top: 75px;
+  width: 100%;
+  height: calc(100vh);
+  background-image: url("../imgs/low-angle-shot-grand-mosque-abu-dhabi-with-glowing-lights-inside-building.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 3;
+}
+
+.banner::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+
+.banner > .text-box {
+  font-family: "Scheherazade New", serif;
+  font-size: 2rem;
+  color: #fff;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.banner > .text-box > .text-box-ayah-number {
+  font-size: 1rem;
+  padding-top: 1rem;
+}
+
+/* End Styling of Header */
+
+/* Start of prayer times section styling */
+
+.prayers {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  /* min-height: 400px; */
+  padding-top: 100px;
+}
+
+.prayers > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 5px solid var(--addColor);
+  margin: 0 1%;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--secondaryColor);
+  position: relative;
+  box-shadow: 0px 0px 15px 0px;
+}
+@media (max-width: 991px) {
+  .prayers > div {
+    margin-bottom: 60px;
+  }
+}
+
+.prayers > div > p {
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+#prayer-times-section .date-and-time {
+  padding-top: 100px;
+  text-align: center;
+}
+
+/* End of pryaer times section styling */
+
+/* Start Doaa of the day section styling */
+
+.section-styling {
+  padding: 80px 0px;
+}
+
+.section-title {
+  padding-bottom: 0.5rem;
+  margin: 0 auto;
+  font-size: 2rem;
+  width: fit-content;
+  color: var(--secondaryColor);
+  position: relative;
+}
+
+.section-title::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 45%;
+  height: 5px;
+  background-color: var(--addColor);
+}
+
+.section-styling .section-text {
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 1.2rem;
+  font-size: 1.5rem;
+  font-family: var(--secondFont);
+  text-align: center;
+}
+
+/* End Doaa of the day section styling */
+
+/* Test */
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--secondaryColor);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--addColor);
+}
