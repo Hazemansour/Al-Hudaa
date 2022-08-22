@@ -1,4 +1,11 @@
-const endpoint = 'https://api.alquran.cloud/v1/meta';
+
+
+
+
+
+
+
+const endpoint = '../assets/json/quran-chapters.json';
 const request = new XMLHttpRequest();
 const audio = new Audio();
 const playPause = document.querySelector('#play-pause');
@@ -6,17 +13,14 @@ const playPauseIcon = document.querySelector('#play-pause > i');
 let isPlaying = false;
 let currentIndex = 0;
 
-// get Surahs names and numbers from http://api.alquran.cloud/v1/meta endpoint.
+// get Surahs names and numbers from local json file.
 request.addEventListener('readystatechange', () => {
     if (request.readyState === 4 && request.status === 200) {
-        const requestData = JSON.parse(request.response);
-        console.log(requestData)
-        // extract Quran reference
-        const surahs = requestData.data.surahs.references
+        const surahs = JSON.parse(request.response);
         const allSurahs = document.querySelectorAll('.surah');
         allSurahs.forEach((el, index )=> {
             // loop through html nodes and append surahs names and numbers. 
-            el.innerHTML = surahs[index].name + " - " + surahs[index].number + `<i class="fas fa-play"></i>`;
+            el.innerHTML = surahs[index].name + " - " + surahs[index].id + `<i class="fas fa-play"></i>`;
             el.addEventListener('click', () => {
                 allSurahs.forEach((el) => {
                     el.classList.remove('active');
@@ -100,3 +104,5 @@ function updateTime() {
 
 request.open('GET', endpoint);
 request.send();
+
+

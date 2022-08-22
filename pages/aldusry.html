@@ -213,6 +213,24 @@
 
     <script src="../assets/scripts/main.js"></script>
     <script src="../assets/scripts/soundplayer.js"></script>
+    <script>
+
+            function httpRequest(endpoint, callback) {
+                    const req = new XMLHttpRequest();
+                    req.open('GET', endpoint);
+                    req.send();
+                    req.addEventListener('readystatechange', () => {
+                        if (req.readyState === 4 && req.status === 200) {
+                            // console.log(JSON.parse(req.responseText)[0].verses[0])
+                            // document.body.innerHTML = `<h1>${JSON.parse(req.responseText)[0].verses[0].text}</h1>`
+                            callback(JSON.parse(req.responseText));
+                        }
+                    })
+                }
+                httpRequest('../assets/json/quran-chapters.json', (data) => {
+                    console.log(data);
+                })
+    </script>
 </body>
 
 </html>
