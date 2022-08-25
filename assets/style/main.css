@@ -10,6 +10,12 @@
   margin: 0 auto;
 }
 
+
+@font-face {
+  font-family: 'Uthmanic';
+  src: url(../fonts/UthmanicHafs_V20.ttf);
+}
+
 @media (min-width: 768px) {
   .container {
     width: 750px;
@@ -40,7 +46,7 @@
   --addColor: #eac280;
   --mainTranstion: all 0.3s ease-in-out;
   --mainFont: "Cairo", sans-serif;
-  --secondFont: "Scheherazade New", serif;
+  --secondFont: "Uthmanic";
 }
 
 a {

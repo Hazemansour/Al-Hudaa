@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 const endpoint = '../assets/json/quran-chapters.json';
 const request = new XMLHttpRequest();
 const audio = new Audio();

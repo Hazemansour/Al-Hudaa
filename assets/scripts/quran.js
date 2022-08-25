@@ -4,20 +4,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // get all surahs names and numbers
 function getSurhasMeta() {
-  const endpoint = "http://api.alquran.cloud/v1/meta";
+  const endpoint = "../assets/json/quran-chapters.json";
   const request = new XMLHttpRequest();
 
   request.addEventListener("readystatechange", () => {
     if (request.readyState === 4 && request.status === 200) {
       const data = JSON.parse(request.responseText);
-      const surahs = data.data.surahs.references;
+      const surahs = data;
 
       surahs.forEach((sura) => {
         const div = document.createElement("div");
         div.className = "surah-name";
         div.innerText = sura.name;
         const span = document.createElement("span");
-        span.innerText = ` (${sura.number})`;
+        span.innerText = ` (${sura.id})`;
         div.appendChild(span);
 
         document.querySelector(".fehras").appendChild(div);
@@ -38,38 +38,32 @@ function getSurah() {
   const surahs = document.querySelectorAll(".surah-name");
   surahs.forEach((el, index) => {
     el.addEventListener("click", () => {
-      const endpoint = `http://api.alquran.cloud/v1/surah/${index + 1}`;
+      const endpoint = `../assets/json/quran.json`;
       const req = new XMLHttpRequest();
 
       req.addEventListener("readystatechange", () => {
         if (req.readyState === 4 && req.status === 200) {
           const data = JSON.parse(req.responseText);
+          const verses = data[index].verses
           const theBasmala = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ";
-          const surahData = {
-            ayahs: data.data.ayahs,
-            name: data.data.name,
-          };
-          // replace the basmala with empty string
-          surahData.ayahs[0].text = surahData.ayahs[0].text.replace(
-            theBasmala,
-            ""
-          );
+          
           const basmala = document.createElement("div");
           basmala.className = "basmala";
           const alsurah = document.createElement("div");
           alsurah.className = "alsurah";
           basmala.innerText = theBasmala;
-          for (let index = 0; index < surahData.ayahs.length; index++) {
-            alsurah.innerHTML += `${surahData.ayahs[index].text} <span class="ayah-number">(${
-                index + 1
+          for (let i = 0; i < verses.length; i++) {
+            alsurah.innerHTML += `${verses[i].text} <span class="ayah-number">(${
+              verses[i].id
               })</span> `;
+              
           }
 
           if (document.querySelector(".alsurah")) {
             document.querySelector(".alsurah").remove();
             document.querySelector(".basmala").remove();
           }
-          if (surahData.name !== "سُورَةُ التَّوۡبَةِ") {
+          if (data[index].name !== "التوبة" && data[index].name !== "الفاتحة") {
             document.querySelector(".maincontent").appendChild(basmala);
           } else {
             basmala.innerText = "أَعُوذُ بِاللَّهِ مِنَ الشَّيطَانِ الرَّجِيمِ";
