@@ -78,8 +78,8 @@ function setSurahsInfo(data) {
 
 // Get Sound Player Controls
 const playButton = document.querySelector('#play-pause'),
- forwordButton = document.querySelector('#forword'),
- backwordButton = document.querySelector('#backword'),
+ forwardButton = document.querySelector('#forword'),
+ backwardButton = document.querySelector('#backword'),
  progress = document.querySelector('.progress-bar'),
  progressBar = document.querySelector('.progress-bar > div');
 
@@ -130,10 +130,24 @@ audio.addEventListener('timeupdate', () => {
 
   progressBar.style.width = currentWidth * currentTime + "%"
 
-  
   currentAudioTime.innerText = currentMints + ":" + (currentSeconds < 10 ? "0" + currentSeconds : currentSeconds);
   
 
 
 })
+
+// 5 seconds forward
+forwardButton.addEventListener('click', secondsForward)
+function secondsForward() {
+      if (audio.src !== "") {
+        audio.currentTime += 5;
+      }
+}
+// 5 seconds backwoard
+backwardButton.addEventListener('click', decreaseSeconds)
+function decreaseSeconds() {
+      if (audio.src !== "") {
+        audio.currentTime -= 5;
+      }
+}
 
