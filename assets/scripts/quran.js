@@ -2,11 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
   getSurhasMeta();
 })
 
+const endpoint = "../assets/json/quran-chapters.json";
+const request = new XMLHttpRequest();
+request.open("GET", endpoint);
+request.send();
+
 // get all surahs names and numbers
 function getSurhasMeta() {
-  const endpoint = "/assets/json/quran-chapters.json";
-  const request = new XMLHttpRequest();
-
+ 
   request.addEventListener("readystatechange", () => {
     if (request.readyState === 4 && request.status === 200) {
       const data = JSON.parse(request.responseText);
@@ -28,8 +31,7 @@ function getSurhasMeta() {
     }
   });
 
-  request.open("GET", endpoint);
-  request.send();
+
 }
 
 
