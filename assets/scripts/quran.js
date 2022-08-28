@@ -1,11 +1,10 @@
-document.addEventListener('DOMContentLoaded', () => {
-  getSurhasMeta();
-})
-
 const endpoint = "../assets/json/quran-chapters.json";
 const request = new XMLHttpRequest();
 request.open("GET", endpoint);
 request.send();
+
+
+getSurhasMeta();
 
 // get all surahs names and numbers
 function getSurhasMeta() {
