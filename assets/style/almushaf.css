@@ -5,14 +5,11 @@ body {
 }
 #main {
     padding-top: 75px;
-    display: grid;
-    grid-template-areas: 
-    'sidebar maincontent maincontent maincontent maincontent' 
-    ;
     height: 100vh;
+    display: flex;
 }
 #main > .sidebar {
-    grid-area: sidebar;
+    width: 20%;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -27,14 +24,14 @@ body {
     color: #000;
     padding: 13px 15px;
     font-family: var(--secondFont);
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     cursor: pointer;
 }
 #main > .sidebar > .fehras > .surah-name:hover {
     background-color: #fff;
 }
 #main > .maincontent {
-    grid-area: maincontent;
+    width: 80%;
     font-family: var(--secondFont);
     font-size: 2rem;
     text-align: center;

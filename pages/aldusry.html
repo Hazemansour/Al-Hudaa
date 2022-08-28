@@ -189,48 +189,33 @@
                 <div class="surah" id="114" data-target="11"></div>
             </div>
 
+            <!-- Start of soundPlayer -->
             <div id="soundplayer-container">
                 <div class="sound-info">
                     <p class="sound-name">غير معروف</p>
-                    <div class="sound-time">غير معروف</div>
-                </div>
-                <div class="progress">
-                    <div class="progress-bar"></div>
-                    <div class="timing">
-                        <div class="current-time">غير معروف</div>
-                        <div class="left-time">غير معروف</div>
-                    </div>
                 </div>
                 <div class="controls">
-                    <div id="forward"><i class="fas fa-step-forward"></i></div>
+                    <div id="forword"><i class="fas fa-forward"></i></div>
                     <div id="play-pause"><i class="fas fa-play"></i></div>
-                    <div id="backword"><i class="fas fa-step-backward"></i></div>
+                    <div id="backword"><i class="fas fa-backward"></i></div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar">
+                        <div><span class="progress-bar-circle"></span></div>
+                    </div>
+                    <div class="timing">
+                        <div class="audio-time">0:00</div>
+                        <div class="current-audio-time">0:00</div>
+                    </div>
                 </div>
             </div>
+            <!-- End of soundPlayer -->
        </div>
     </main>
     <!-- End of main content -->
 
     <script src="../assets/scripts/main.js"></script>
     <script src="../assets/scripts/soundplayer.js"></script>
-    <script>
-
-            function httpRequest(endpoint, callback) {
-                    const req = new XMLHttpRequest();
-                    req.open('GET', endpoint);
-                    req.send();
-                    req.addEventListener('readystatechange', () => {
-                        if (req.readyState === 4 && req.status === 200) {
-                            // console.log(JSON.parse(req.responseText)[0].verses[0])
-                            // document.body.innerHTML = `<h1>${JSON.parse(req.responseText)[0].verses[0].text}</h1>`
-                            callback(JSON.parse(req.responseText));
-                        }
-                    })
-                }
-                httpRequest('../assets/json/quran-chapters.json', (data) => {
-                    console.log(data);
-                })
-    </script>
 </body>
 
 </html>

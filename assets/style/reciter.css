@@ -96,9 +96,28 @@ body {
     padding: 10px 0;
 }
 .progress > .progress-bar {
-    height: 4px;
-    background-color: #F5B44B;
+    background-color: #f5b44b41;
     cursor: pointer;
+}
+.progress > .progress-bar > div {
+    height: 6px;
+    background-color: #F5B44B;
+    width: 0%;
+    position: relative;
+}
+.progress > .progress-bar:hover > div > span {
+    display: inline-block;
+}
+.progress > .progress-bar > div > span {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+    width: 10px;
+    height: 10px;
+    background-color: rgb(3, 3, 3);
+    border-radius: 50%;
 }
 .timing {
     display: flex;

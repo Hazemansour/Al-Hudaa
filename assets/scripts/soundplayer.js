@@ -1,101 +1,139 @@
-const endpoint = '../assets/json/quran-chapters.json';
+const endpoint = "../assets/json/quran-chapters.json";
 const request = new XMLHttpRequest();
 const audio = new Audio();
-const playPause = document.querySelector('#play-pause');
-const playPauseIcon = document.querySelector('#play-pause > i');
-let isPlaying = false;
-let currentIndex = 0;
+const soundName = document.querySelector('.sound-name');
+const audioTime = document.querySelector('.audio-time');
+let audioDuration = 0;
 
-// get Surahs names and numbers from local json file.
-request.addEventListener('readystatechange', () => {
-    if (request.readyState === 4 && request.status === 200) {
-        const surahs = JSON.parse(request.response);
-        const allSurahs = document.querySelectorAll('.surah');
-        allSurahs.forEach((el, index )=> {
-            // loop through html nodes and append surahs names and numbers. 
-            el.innerHTML = surahs[index].name + " - " + surahs[index].id + `<i class="fas fa-play"></i>`;
-            el.addEventListener('click', () => {
-                allSurahs.forEach((el) => {
-                    el.classList.remove('active');
-                    el.querySelector('i').className = 'fas fa-play';
-                })
-                el.classList.add('active');
-                el.querySelector('i').className = 'fas fa-pause';
-                const server = el.getAttribute('data-target');
-                let id = index + 1;
-                if (id < 10) {
-                    id = "00" + id   
-                } else if ( id >= 10 && id < 100) {
-                    id = "0" + id
-                } 
+request.open("GET", endpoint);
+request.send();
 
-                playSound(server, id, index, surahs);
-        })
-        })
-        // console.log(surahs)
-    }
-})
-const surahsIcon = document.querySelectorAll('surah > i');
+// request and check request status
+request.addEventListener("readystatechange", getSurahsInfo);
 
-// play and pause teh audio
-playPause.addEventListener('click', () => {
-    if (audio.src !== '') {
-        if (isPlaying) {
-        isPlaying = false;
-        playPauseIcon.className = 'fas fa-play';
-        audio.pause()
-    } else {
-        isPlaying = true;
-        playPauseIcon.className = 'fas fa-pause';
-        audio.play();
-    }
-    }
-})
-// Check if the audio ended
-audio.addEventListener('ended', () => {
-    playPauseIcon.className = 'fas fa-play';
-    isPlaying = false;
-})
-// send request to the server
-function playSound(server, surah, index, data) {
-    audio.src = `https://server${server}.mp3quran.net/yasser/${surah}.mp3`;
-    audio.play();
-    playPauseIcon.className = 'fas fa-pause';
-    isPlaying = true;
-    setMetaData(index, data)
+function getSurahsInfo() {
+  // If data received
+  if (request.readyState === 4 && request.status === 200) {
+    setSurahsInfo(JSON.parse(request.responseText));
+  }
+  // If there is an error
+  else if (request.readyState === 4 && request.status !== 200) {
+    console.log("Somthing went wrong! => error " + request.status);
+  }
 }
 
-function setMetaData(index, data) {
-    document.querySelector('.sound-name').innerText = data[index].name;
+// set all surahs data to the page
+function setSurahsInfo(data) {
+  // get all info containers
+  const $List = document.querySelectorAll(".surah");
+  // set the information for each surah
+  $List.forEach((element, index) => {
+    const span = document.createElement("span");
+    span.className = "fas fa-play";
+    element.innerHTML = `${data[index].name} - ${index + 1}`;
+    element.appendChild(span);
+
+    // play the surah on click on its name.
+    element.addEventListener("click", () => {
+      // set the name of surah
+      soundName.innerText = data[index].name; 
+    let id = index + 1;
+    if (id < 10) {
+      id = "00" + id;
+    } else if (id >= 10 && id < 100) {
+      id = "0" + id;
+    } else if (id == 100 && id > 100) {
+      id = id;
+    }
+  
+    audio.src = `https://server${element.getAttribute('data-target')}.mp3quran.net/yasser/${id}.mp3`;
+  
     audio.onloadedmetadata = () => {
-       let  duration = audio.duration;
-        let mints = duration / 60;
-        let rSeconds = duration % 60;
-        document.querySelector('.sound-time').innerHTML = Math.floor(mints) + ":" + Math.round(rSeconds);
-    }
-   
+      audio.play();
+      audioDuration = audio.duration;
+      // set the metadata
+      let mints = Math.floor(audioDuration / 60);
+      let seconds = audioDuration % 60;
+      audioTime.innerText = mints + ":" + (Math.round(seconds) < 10 ? "0" + Math.round(seconds) : Math.round(seconds));
+    };
+    // change icon for play-pause button
+    document.querySelector('#play-pause i').className = 'fas fa-pause';
+    const icons = document.querySelectorAll('.surah span');
+    icons.forEach((el) => {
+      // change icon
+     el.className = "fas fa-play";
+     // add active class to icon parentElement
+     el.parentElement.classList.remove('active');
+     el.parentElement.classList.remove('playing');
+    })
+     // add active class to for all icon parentElement
+    element.classList.add('active');
+    // change icon
+    element.querySelector("span").className = "fas fa-pause";
+    element.classList.add('playing');
+   }
+    );
+  });
 }
+
+// Get Sound Player Controls
+const playButton = document.querySelector('#play-pause'),
+ forwordButton = document.querySelector('#forword'),
+ backwordButton = document.querySelector('#backword'),
+ progress = document.querySelector('.progress-bar'),
+ progressBar = document.querySelector('.progress-bar > div');
+
+ let isPlaying = false;
+playButton.addEventListener('click', playPauseSurah)
+
+ function playPauseSurah() {
+   if (isPlaying) {
+      audio.play();
+    playButton.querySelector('i').className = 'fas fa-pause';
+
+    // change playing surah icon to pause
+   document.querySelector('.playing span').classList.replace('fa-play', 'fa-pause');
+
+      isPlaying = false;
+   } else {
+      audio.pause();
+    playButton.querySelector('i').className = 'fas fa-play';
+      //  change playing surah icon to play
+   document.querySelector('.playing span').classList.replace('fa-pause', 'fa-play');
+
+      isPlaying = true;
+   }
+ }
+
+// if audio ended 
+audio.addEventListener('ended', () => {
+   // set isPlaying to true
+   isPlaying = true;
+   // change playButton icon to play
+   playButton.querySelector('i').className = 'fas fa-play';
+   // change playing surah icon to play
+   document.querySelector('.playing span').classList.replace('fa-pause', 'fa-play');
+})
+
+
+// set audio timings
+const currentAudioTime = document.querySelector('.current-audio-time');
 
 audio.addEventListener('timeupdate', () => {
 
-    updateTime();
-}
-) 
+  let currentTime = audio.currentTime;
+  let mints = Math.floor(audioDuration / 60);
+  let seconds = audioDuration % 60;
+  let currentMints = Math.floor(currentTime / 60);
+  let currentSeconds = Math.floor(currentTime % 60);
+  let currentWidth = 100 / audioDuration;
 
-function updateTime() {
-        if (isPlaying) {
-            let currentTime = audio.currentTime;
-        let mints = Math.floor(currentTime / 60);
-        let rSeconds = Math.round(currentTime % 60);
-        let currentMints = (Math.floor(audio.duration / 60)) - mints;
-        let currentSeconds = (Math.round(audio.duration % 60))- rSeconds; 
-        document.querySelector('.current-time').innerText = mints + ":" + rSeconds;
-        document.querySelector('.left-time').innerText = currentMints + ":" + currentSeconds;
-        audio.onu
-        }
-}
+  progressBar.style.width = currentWidth * currentTime + "%"
 
-request.open('GET', endpoint);
-request.send();
+  
+  currentAudioTime.innerText = currentMints + ":" + (currentSeconds < 10 ? "0" + currentSeconds : currentSeconds);
+  
 
+
+})
 
