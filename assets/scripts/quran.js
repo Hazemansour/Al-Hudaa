@@ -39,7 +39,7 @@ function getSurah() {
   const surahs = document.querySelectorAll(".surah-name");
   surahs.forEach((el, index) => {
     el.addEventListener("click", () => {
-      const endpoint = `../assets/json/quran.json`;
+      const endpoint = `https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran.json`;
       const req = new XMLHttpRequest();
 
       req.addEventListener("readystatechange", () => {
