@@ -1,4 +1,4 @@
-const endpoint = "../assets/json/quran-chapters.json";
+const endpoint = "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/index.json";
 const request = new XMLHttpRequest();
 const audio = new Audio();
 const soundName = document.querySelector('.sound-name');
@@ -45,8 +45,8 @@ function setSurahsInfo(data) {
     } else if (id == 100 && id > 100) {
       id = id;
     }
-  
-    audio.src = `https://server${element.getAttribute('data-target')}.mp3quran.net/yasser/${id}.mp3`;
+    let readerName = document.querySelector('.surah').getAttribute('data-name');
+    audio.src = `https://server${element.getAttribute('data-target')}.mp3quran.net/${readerName}/${id}.mp3`;
   
     audio.onloadedmetadata = () => {
       audio.play();
