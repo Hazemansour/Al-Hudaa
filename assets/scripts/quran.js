@@ -1,4 +1,4 @@
-const endpoint = "../assets/json/quran-chapters.json";
+const endpoint = "../json/quran-chapters.json";
 const request = new XMLHttpRequest();
 request.open("GET", endpoint);
 request.send();
