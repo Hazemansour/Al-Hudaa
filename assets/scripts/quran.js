@@ -1,4 +1,4 @@
-const endpoint = "../json/quran-chapters.json";
+const endpoint = "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/index.json";
 const request = new XMLHttpRequest();
 request.open("GET", endpoint);
 request.send();
